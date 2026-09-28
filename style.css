@@ -1,0 +1,44 @@
+:root {
+    --primary: #00d2ff;
+    --accent: #9d50bb;
+    --glass: rgba(15, 15, 25, 0.85);
+}
+
+body{
+    height: 100vh; margin: 0;
+    background: linear-gradient(rgba(10, 11, 16, 0.85), rgba(10, 11, 16, 0.85)), 
+                url('/static/images/bg.jpg') no-repeat center center fixed;
+    background-size: cover; color: white; font-family: 'Inter', sans-serif;
+}
+
+/* Sidebar Layout */
+.wrapper { display: flex; min-height: 100vh; }
+.sidebar {
+    width: 260px; background: rgba(0,0,0,0.6); backdrop-filter: blur(20px);
+    border-right: 1px solid rgba(255,255,255,0.1); padding: 40px 20px; 
+    position: fixed; height: 100vh; z-index: 100;
+}
+.main-content { flex: 1; margin-left: 260px; padding: 40px; }
+
+/* Elite Branding */
+.brand {
+    font-size: 1.6rem; font-weight: 900; letter-spacing: 3px;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 50px; text-align: center; text-transform: uppercase;
+}
+
+.nav-link { color: rgba(255,255,255,0.7); margin-bottom: 15px; border-radius: 10px; padding: 12px; transition: 0.3s; text-decoration: none; display: block; }
+.nav-link:hover, .nav-link.active { background: rgba(255,255,255,0.1); color: var(--primary); }
+
+.glass-card { background: var(--glass); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 25px; box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+
+/* Station Grid */
+.st-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 10px; }
+.st-item { padding: 12px 5px; border-radius: 8px; text-align: center; font-size: 0.7rem; border-top: 4px solid #444; background: rgba(255,255,255,0.05); }
+.Available { border-color: #00ff88; }
+.Busy { border-color: #ff0055; }
+.Out.of.Service { border-color: #ffb700; opacity: 0.5; }
+
+.btn-elite { background: linear-gradient(45deg, var(--primary), var(--accent)); border: none; color: white; font-weight: bold; padding: 10px 20px; border-radius: 8px; }
+.btn-elite:hover { box-shadow: 0 0 20px var(--primary); }

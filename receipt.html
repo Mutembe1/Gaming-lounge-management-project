@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Receipt | Elite Gaming</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .receipt-paper {
+            background: white;
+            color: black;
+            width: 380px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .receipt-header { text-align: center; border-bottom: 2px dashed #444; margin-bottom: 20px; padding-bottom: 10px; }
+        .receipt-row { display: flex; justify-content: space-between; margin-bottom: 12px; }
+        .total-row { border-top: 2px solid #000; margin-top: 20px; padding-top: 15px; font-weight: bold; font-size: 1.3rem; }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; }
+            .receipt-paper { box-shadow: none; margin: 0; width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container text-center no-print mt-5">
+        <h2 class="text-info">Payment Successful!</h2>
+        <p>Session has been closed and station is now available.</p>
+    </div>
+
+    <!-- PRINTABLE AREA -->
+    <div class="receipt-paper" id="ticket">
+        <div class="receipt-header">
+            <h3 style="margin:0;">ELITE GAMING</h3>
+            <small>Terminal Receipt</small><br>
+            <small>{{ session.end_time.strftime('%d/%m/%Y %H:%M') }}</small>
+        </div>
+
+        <div class="receipt-row"><span>Station:</span><span>ST {{ session.station_id }}</span></div>
+        <div class="receipt-row"><span>Game:</span><span>{{ session.game_name }}</span></div>
+        
+        <div class="receipt-row">
+            <span>Duration:</span>
+            <span>{{ ((session.end_time - session.start_time).total_seconds() / 60) | int }} Mins</span>
+        </div>
+
+        <div class="receipt-row"><span>Method:</span><span>{{ session.payment_method }}</span></div>
+
+        <div class="receipt-row total-row">
+            <span>TOTAL:</span>
+            <span>KSH {{ session.total_cost }}</span>
+        </div>
+
+        <div class="text-center mt-4" style="border-top: 2px dashed #444; padding-top: 10px;">
+            <small>Thank you for choosing Elite Gaming!</small>
+        </div>
+    </div>
+
+    <!-- ACTION BUTTONS -->
+    <div class="text-center no-print pb-5">
+        <button onclick="window.print()" class="btn btn-success px-4 me-2">🖨️ Print Receipt</button>
+        
+        <!-- SMART REDIRECT LINK -->
+        {% if session.role == 'admin' %}
+            <a href="/admin/dashboard" class="btn btn-outline-light">Return to Admin Hub</a>
+        {% else %}
+            <a href="/user/dashboard" class="btn btn-outline-light">Return to Staff Hub</a>
+        {% endif %}
+    </div>
+
+</body>
+</html>
